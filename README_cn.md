@@ -5,7 +5,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
-[![Last Commit](https://img.shields.io/github/last-commit/xhq/NeuralCoreAgent)](https://github.com/xhq/NeuralCoreAgent/commits/main)
+[![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](#)
 [![Type](https://img.shields.io/badge/Type-AI%20Agent-FF1493.svg)](#)
 
 </div>
@@ -46,4 +46,4 @@ Ada 独立于销售流水线（Scout → Wright → Buzz → Vendy → Echo）�
 
 Copyright (c) 2026 All Contributors. 以 [MIT License](LICENSE.md) 授权。
 
-**署名**：若您基于本项目派生或再分发，请保留版权声明与许可证文件，并注明来源：[NeuralCoreAgent](https://github.com/xhq/NeuralCoreAgent)。
+**署名**：若您基于本项目派生或再分发，请保留版权声明与许可证文件，并注明来源：[NeuralCoreAgent](https://github.com/xhqing/NeuralCoreAgent)。

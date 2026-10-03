@@ -5,7 +5,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
-[![Last Commit](https://img.shields.io/github/last-commit/xhq/NeuralCoreAgent)](https://github.com/xhq/NeuralCoreAgent/commits/main)
+[![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](#)
 [![Type](https://img.shields.io/badge/Type-AI%20Agent-FF1493.svg)](#)
 
 </div>
@@ -46,4 +46,4 @@ Ada is independent of the sales pipeline (Scout → Wright → Buzz → Vendy �
 
 Copyright (c) 2026 All Contributors. Licensed under the [MIT License](LICENSE.md).
 
-**Attribution:** If you derive from or redistribute this project, please retain the copyright notice and license file, and credit the source: [NeuralCoreAgent](https://github.com/xhq/NeuralCoreAgent).
+**Attribution:** If you derive from or redistribute this project, please retain the copyright notice and license file, and credit the source: [NeuralCoreAgent](https://github.com/xhqing/NeuralCoreAgent).
