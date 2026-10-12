@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### 变更（子项目新规改写 + AgentCortex 智能体专属文件清理，2026-10-12 用户修订）
+
+- **为什么改**：用户 2026-10-12 修订全局规则，取代原「子项目 `.claude/` 超集」规则——`CLAUDE.md` / `AGENTS.md` / `.claude/` / 项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的智能体专属文件只有 Agent 项目允许拥有，非 Agent 项目（含子项目）一律不得存在；后台开启 pi 会话（intercom / `agent_call` / `agent_wake`）只能以 Agent 项目根目录为工作目录。
+- **改了什么**：①`.claude/CLAUDE.md`「子项目 `.claude/` 自动同步（2026-08-10 立）」节整节改写为「子项目（2026-10-12 用户修订）」——列明子项目清单（AgentCortex）、子项目不携带智能体专属文件、跨目录按路径操作、后台会话工作目录限制、映射维护要求；②子项目 AgentCortex 的存量智能体专属文件按新规清理删除（`CLAUDE.md` + `AGENTS.md` 软链；其指南中与 README 重复的部分不再保留，独有内容「评测文档入口」迁入该仓 README 的 Project Files 表，随附的本项目规则全文属本项目、副本删除）——AgentCortex 侧详情记该仓 CHANGELOG。
+
 ### 变更（CLAUDE.md 删去「由 Claude Code 自动加载」说明句）
 
 - **为什么改**：用户 2026-09-12 要求 CLAUDE.md 不再强调本文由 Claude Code 加载，团队全部项目的 CLAUDE.md 统一清理此类语句。
