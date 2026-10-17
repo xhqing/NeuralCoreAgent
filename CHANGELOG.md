@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+## [0.1.2] - 2026-10-17
 
 ### 变更（Agent 进驻子项目：AGENTS.md / .pi 软链接网络，2026-10-17 用户修订）
 
