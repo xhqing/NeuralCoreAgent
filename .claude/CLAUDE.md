@@ -23,15 +23,15 @@
 - 通用工作纪律见全局 `~/.claude/CLAUDE.md`。
 - 涉及敏感信息（API key、token、密钥）一律按全局规则处理：只写占位符，真实值只进本机配置。
 
-## 子项目（2026-10-12 用户修订）
+## 子项目（2026-10-17 用户修订：Agent 进驻子项目）
 
 本项目负责维护 **AgentCortex**（`~/Developer/AgentCortex`）——深度推理引擎规则集（Infinite / Rapid / Incisive 三套引擎，面向 DeepSeek V4 Pro / Flash、GLM 5.1；评测体系与演进路线见仓库内 `docs/`）。
 
-按全局新规（`~/.claude/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-12 修订）」节，取代原「子项目 `.claude/` 超集」规则）：
+按全局规则（`~/.claude/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-17 修订）」节，取代 2026-10-12 的「子项目一律不得存在」）：
 
-- **子项目不携带智能体专属文件**：`CLAUDE.md`、`AGENTS.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件只属于 Agent 项目；子项目里一律不得存在（存量已清理；独有内容先迁回本项目或子项目普通文档再删）。子项目的项目说明用 README / docs 等普通文档承载。
-- **子项目的工作在本项目会话里按路径操作**（如 `git -C ~/Developer/AgentCortex`、用完整路径读写其文件），不在子项目目录开会话。
-- **后台开启会话（intercom / `agent_call` / `agent_wake`）只能以本项目根目录为工作目录**（`~/Developer/NeuralCoreAgent`），不得以子项目或其它非 Agent 项目目录开启（工具已强制校验）。
+- **智能体专属文件：实体只在本项目，子项目挂指回本项目的软链接**：`CLAUDE.md`、`AGENTS.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件，其实体只属于 Agent 项目；**AgentCortex 根目录挂两条相对路径软链接**——`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`、`.pi → ../NeuralCoreAgent/.pi`（随仓库提交）——在子项目目录开会话即继承 Ada 的身份与规则（Agent 进驻子项目）。子项目的项目说明用 README / docs 等普通文档承载。
+- **子项目的工作在本项目会话里按路径操作**（如 `git -C ~/Developer/AgentCortex`、用完整路径读写其文件）；用户本人在子项目目录手动开会话时，经上述软链接继承本项目身份。
+- **后台开启会话（intercom / `agent_call` / `agent_wake`）仍只能以本项目根目录为工作目录**（`~/Developer/NeuralCoreAgent`），不得以子项目或其它非 Agent 项目目录开启（工具按注册表校验、会拒绝子项目目录）。
 - **维护映射**：新增 / 变更子项目时同步更新本清单与全局 agents-registry 的「子项目映射」表，两者保持一致。
 
 ## 你的位置
