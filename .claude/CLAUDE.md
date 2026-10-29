@@ -23,14 +23,18 @@
 - 通用工作纪律见全局 `~/.claude/CLAUDE.md`。
 - 涉及敏感信息（API key、token、密钥）一律按全局规则处理：只写占位符，真实值只进本机配置。
 
-## 子项目（2026-10-17 用户修订：Agent 进驻子项目）
+## 子项目（2026-10-30 用户修订：身份层软链接 + 能力层目录引用）
 
 本项目负责维护 **AgentCortex**（`~/Developer/AgentCortex`）——深度推理引擎规则集（Infinite / Rapid / Incisive 三套引擎，面向 DeepSeek V4 Pro / Flash、GLM 5.1；评测体系与演进路线见仓库内 `docs/`）。
 
-按全局规则（`~/.claude/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-17 修订）」节，取代 2026-10-12 的「子项目一律不得存在」）：
+按全局规则（`~/.pi/agent/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-30 修订）」节，取代 2026-10-17 的「`.pi` 也挂软链接」）：
 
-- **智能体专属文件：实体只在本项目，子项目挂指回本项目的软链接**：`CLAUDE.md`、`AGENTS.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件，其实体只属于 Agent 项目；**AgentCortex 根目录挂两条相对路径软链接**——`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`、`.pi → ../NeuralCoreAgent/.pi`（随仓库提交）——在子项目目录开会话即继承 Ada 的身份与规则（Agent 进驻子项目）。子项目的项目说明用 README / docs 等普通文档承载。
-- **子项目的工作在本项目会话里按路径操作**（如 `git -C ~/Developer/AgentCortex`、用完整路径读写其文件）；用户本人在子项目目录手动开会话时，经上述软链接继承本项目身份。
+- **智能体专属文件的实体只在本项目**：`CLAUDE.md`、`AGENTS.md`、`AGENTS.override.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件，实体副本只有 Agent 项目允许拥有；非 Agent 项目（含子项目）不得放实体副本、不得从本项目复制内容进去——同一套机制只需一份权威来源。
+- **AgentCortex 按两层处理（随仓库提交）**：
+  - **身份层 —— `AGENTS.md` 软链接**（必须与本项目一致）：`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`。pi 的上下文文件只从全局 + 逐级祖先目录 + 当前目录加载、**没有 include 机制**，做超集只能靠复制，而复制必然随本项目演进而漂移；且子项目目录里的会话仍然是同一个 agent，身份本来就不该分叉。
+  - **能力层 —— 真实 `.pi/` 目录（超集，用引用实现）**：`.pi/settings.json` 把本项目 `.pi/` 下的 `extensions` / `skills` / `prompts` / `themes` 四个目录以路径引用进来，再加子项目自己的 `./extensions`、`./skills` 等本地目录。引用的是目录，本项目以后新增技能 / 扩展会**自动带过来、零同步动作**；子项目往 `.pi` 写东西只写自己的目录，**不会污染本项目、也不影响兄弟子项目**。
+  - **纪律**：子项目 `.pi` 只允许**追加**，不允许重述 / 覆盖基座规则（子项目专属规则用 `.pi/APPEND_SYSTEM.md` 追加，不要用 `.pi/SYSTEM.md`——那是整体替换，会把 agent 身份冲掉）。
+- **子项目的工作在本项目会话里按路径操作**（如 `git -C ~/Developer/AgentCortex`、用完整路径读写其文件）；用户本人在子项目目录手动开会话时，经上述软链接与 `.pi/settings.json` 继承本项目身份与能力。子项目的项目说明用 README / docs 等普通文档承载。
 - **后台开启会话（intercom / `agent_call` / `agent_wake`）仍只能以本项目根目录为工作目录**（`~/Developer/NeuralCoreAgent`），不得以子项目或其它非 Agent 项目目录开启（工具按注册表校验、会拒绝子项目目录）。
 - **维护映射**：新增 / 变更子项目时同步更新本清单与全局 agents-registry 的「子项目映射」表，两者保持一致。
 

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [未发布]
+
+### 变更（子项目 `.pi` 改为真实目录 + 资源引用 + 子项目清单节改写，2026-10-30 用户修订）
+
+- **为什么改**：用户 2026-10-30 修订「智能体专属文件」归属规则（取代 2026-10-17 的「`.pi` 也挂软链接」）——旧版把「共享」与「独占」压在同一个软链接上：子项目往 `.pi` 写任何东西都等于直接写进 Agent 项目，会污染该 Agent 名下全部兄弟子项目、并进 Agent 仓库的 git 历史。新版分层：身份层（`AGENTS.md`）继续软链接以保持一致（pi 的上下文文件没有 include 机制，超集只能靠复制、复制必然漂移）；能力层（`.pi/`）在子项目里建真实目录，`settings.json` 用路径引用 Agent 项目的资源目录，本地专属内容放自己的目录。
+- **改了什么**：①`.claude/CLAUDE.md`「子项目」节改写为 2026-10-30 版——标题更新为「2026-10-30 用户修订：身份层软链接 + 能力层目录引用」；正文拆成「实体只在本项目」+「AgentCortex 按两层处理（`AGENTS.md` 软链接 / 真实 `.pi/` 目录 + `settings.json` 引用）」+「子项目 `.pi` 只允许追加、不得重述 / 覆盖基座规则」（子项目专属规则用 `.pi/APPEND_SYSTEM.md` 追加，不用 `.pi/SYSTEM.md`）；规则出处路径由旧的 `~/.claude/docs/agents-registry.md` 改为权威源 `~/.pi/agent/docs/agents-registry.md`。②子项目 AgentCortex 按新规把 `.pi` 软链接换成真实目录 + `.pi/settings.json`（详情记该仓 CHANGELOG）。
+- **说明**：本项目 `.pi` 目前只有 `.gitkeep`、尚无 `extensions` / `skills` / `prompts` / `themes` 目录，因此子项目 `settings.json` 里的这四条引用当下为空转；以后本项目 `.pi` 新增技能 / 扩展时会被子项目自动带过去，无需再同步。
+
 ## [0.1.2] - 2026-10-17
 
 ### 变更（Agent 进驻子项目：AGENTS.md / .pi 软链接网络，2026-10-17 用户修订）
