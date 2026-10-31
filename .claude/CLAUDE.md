@@ -25,12 +25,15 @@
 
 ## 子项目（2026-10-30 用户修订：身份层软链接 + 能力层目录引用）
 
-本项目负责维护 **AgentCortex**（`~/Developer/AgentCortex`）——深度推理引擎规则集（Infinite / Rapid / Incisive 三套引擎，面向 DeepSeek V4 Pro / Flash、GLM 5.1；评测体系与演进路线见仓库内 `docs/`）。
+本项目负责维护两个子项目：
+
+- **AgentCortex**（`~/Developer/AgentCortex`）——深度推理引擎规则集（Infinite / Rapid / Incisive 三套引擎，面向 DeepSeek V4 Pro / Flash、GLM 5.1；评测体系与演进路线见仓库内 `docs/`）。
+- **ToolCallingRules**（`~/Developer/ToolCallingRules`）——LLM 工具调用规则集（22 条规则 / 7 类，注入 system prompt 以纠正 function calling 的常见错误：可选字段填 `null` 占位符、路径被 Markdown 包裹、容器类型不匹配、出错后盲目重试；License PolyForm-Noncommercial。2026-10-31 用户决定由本项目接手负责，此前是未登记的历史独立项目）。
 
 按全局规则（`~/.pi/agent/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-30 修订）」节，取代 2026-10-17 的「`.pi` 也挂软链接」）：
 
 - **智能体专属文件的实体只在本项目**：`CLAUDE.md`、`AGENTS.md`、`AGENTS.override.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件，实体副本只有 Agent 项目允许拥有；非 Agent 项目（含子项目）不得放实体副本、不得从本项目复制内容进去——同一套机制只需一份权威来源。
-- **AgentCortex 按两层处理（随仓库提交）**：
+- **两个子项目都按两层处理（随仓库提交）**：
   - **身份层 —— `AGENTS.md` 软链接**（必须与本项目一致）：`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`。pi 的上下文文件只从全局 + 逐级祖先目录 + 当前目录加载、**没有 include 机制**，做超集只能靠复制，而复制必然随本项目演进而漂移；且子项目目录里的会话仍然是同一个 agent，身份本来就不该分叉。
   - **能力层 —— 真实 `.pi/` 目录（超集，用引用实现）**：`.pi/settings.json` 把本项目 `.pi/` 下的 `extensions` / `skills` / `prompts` / `themes` 四个目录以路径引用进来，再加子项目自己的 `./extensions`、`./skills` 等本地目录。引用的是目录，本项目以后新增技能 / 扩展会**自动带过来、零同步动作**；子项目往 `.pi` 写东西只写自己的目录，**不会污染本项目、也不影响兄弟子项目**。
   - **纪律**：子项目 `.pi` 只允许**追加**，不允许重述 / 覆盖基座规则（子项目专属规则用 `.pi/APPEND_SYSTEM.md` 追加，不要用 `.pi/SYSTEM.md`——那是整体替换，会把 agent 身份冲掉）。
