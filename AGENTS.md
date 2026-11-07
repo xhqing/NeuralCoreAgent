@@ -37,8 +37,7 @@
   - **身份层 —— `AGENTS.md` 软链接**（必须与本项目一致）：`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`。pi 的上下文文件只从全局 + 逐级祖先目录 + 当前目录加载、**没有 include 机制**，做超集只能靠复制，而复制必然随本项目演进而漂移；且子项目目录里的会话仍然是同一个 agent，身份本来就不该分叉。
   - **能力层 —— 真实 `.pi/` 目录（超集，用引用实现）**：`.pi/settings.json` 把本项目 `.pi/` 下的 `extensions` / `skills` / `prompts` / `themes` 四个目录以路径引用进来，再加子项目自己的 `./extensions`、`./skills` 等本地目录。引用的是目录，本项目以后新增技能 / 扩展会**自动带过来、零同步动作**；子项目往 `.pi` 写东西只写自己的目录，**不会污染本项目、也不影响兄弟子项目**。
   - **纪律**：子项目 `.pi` 只允许**追加**，不允许重述 / 覆盖基座规则（子项目专属规则用 `.pi/APPEND_SYSTEM.md` 追加，不要用 `.pi/SYSTEM.md`——那是整体替换，会把 agent 身份冲掉）。
-- **子项目的工作在本项目会话里按路径操作**（如 `git -C ~/Developer/AgentCortex`、用完整路径读写其文件）；用户本人在子项目目录手动开会话时，经上述软链接与 `.pi/settings.json` 继承本项目身份与能力。子项目的项目说明用 README / docs 等普通文档承载。
-- **后台开启会话（intercom / `agent_call` / `agent_wake`）仍只能以本项目根目录为工作目录**（`~/Developer/NeuralCoreAgent`），不得以子项目或其它非 Agent 项目目录开启（工具按注册表校验、会拒绝子项目目录）。
+- **子项目任务交给 Worker 会话（2026-11-07 全局 Leader / Worker 规则）**：本项目根目录起的会话是 Leader（只做 local main 同步、建 worktree、派任务、收尾）；子项目根 / 子项目 worktree 起的会话是 Worker（干具体活并向 Leader 汇报）。`agent_call` / `agent_wake` 的 `dir` 允许 Agent 项目根 / 已登记子项目根 / 子项目的 git worktree 三类，启动带 `-a`；子项目专属硬规则写进各自的 `.pi/APPEND_SYSTEM.md`。详见全局 `~/.pi/agent/AGENTS.md`「Leader / Worker 分工」与 `docs/agents-registry.md` 第 4 条。子项目的项目说明用 README / docs 等普通文档承载。
 - **维护映射**：新增 / 变更子项目时同步更新本清单与全局 agents-registry 的「子项目映射」表，两者保持一致。
 
 ## 你的位置
