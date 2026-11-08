@@ -23,20 +23,20 @@
 - 通用工作纪律见全局 `~/.pi/agent/AGENTS.md`。
 - 涉及敏感信息（API key、token、密钥）一律按全局规则处理：只写占位符，真实值只进本机配置。
 
-## 子项目（2026-10-30 用户修订：身份层软链接 + 能力层目录引用）
+## 子项目（2026-11-08 用户修订：与子项目完全独立）
 
 本项目负责维护两个子项目：
 
 - **AgentCortex**（`~/Developer/AgentCortex`）——深度推理引擎规则集（Infinite / Rapid / Incisive 三套引擎，面向 DeepSeek V4 Pro / Flash、GLM 5.1；评测体系与演进路线见仓库内 `docs/`）。
 - **ToolCallingRules**（`~/Developer/ToolCallingRules`）——LLM 工具调用规则集（22 条规则 / 7 类，注入 system prompt 以纠正 function calling 的常见错误：可选字段填 `null` 占位符、路径被 Markdown 包裹、容器类型不匹配、出错后盲目重试；License PolyForm-Noncommercial。2026-10-31 用户决定由本项目接手负责，此前是未登记的历史独立项目）。
 
-按全局规则（`~/.pi/agent/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-10-30 修订）」节，取代 2026-10-17 的「`.pi` 也挂软链接」）：
+按全局规则（`~/.pi/agent/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-11-08 修订）」节）：
 
-- **智能体专属文件的实体只在本项目**：`AGENTS.md`、`AGENTS.override.md`、`.claude/`、项目级 `.pi/` 等「会话启动时按工作目录加载、表征智能体身份」的项目级文件，实体副本只有 Agent 项目允许拥有；非 Agent 项目（含子项目）不得放实体副本、不得从本项目复制内容进去——同一套机制只需一份权威来源。
-- **两个子项目都按两层处理（随仓库提交）**：
-  - **身份层 —— `AGENTS.md` 软链接**（必须与本项目一致）：`AGENTS.md → ../NeuralCoreAgent/AGENTS.md`。pi 的上下文文件只从全局 + 逐级祖先目录 + 当前目录加载、**没有 include 机制**，做超集只能靠复制，而复制必然随本项目演进而漂移；且子项目目录里的会话仍然是同一个 agent，身份本来就不该分叉。
-  - **能力层 —— 真实 `.pi/` 目录（超集，用引用实现）**：`.pi/settings.json` 把本项目 `.pi/` 下的 `extensions` / `skills` / `prompts` / `themes` 四个目录以路径引用进来，再加子项目自己的 `./extensions`、`./skills` 等本地目录。引用的是目录，本项目以后新增技能 / 扩展会**自动带过来、零同步动作**；子项目往 `.pi` 写东西只写自己的目录，**不会污染本项目、也不影响兄弟子项目**。
-  - **纪律**：子项目 `.pi` 只允许**追加**，不允许重述 / 覆盖基座规则（子项目专属规则用 `.pi/APPEND_SYSTEM.md` 追加，不要用 `.pi/SYSTEM.md`——那是整体替换，会把 agent 身份冲掉）。
+- **两边完全独立**：本项目与两个子项目的 `AGENTS.md`、`.pi/` 之间**没有任何链接、没有任何路径引用**，各自只放本项目真实需要的内容。
+  - **子项目那边**：`AGENTS.md` 是**本仓库的实体文件**（本项目是什么 / 归 Ada 负责 / Worker 边界 / 规则索引），`.pi/` 只放自己的东西（通常是 `.pi/APPEND_SYSTEM.md` 一份硬约束，需要技能扩展就放自己的 `.pi/{extensions,skills,...}`）。
+  - **本项目这边**：`AGENTS.md` / `.pi/` 只为 Ada 自己的需要存在，不为「让子项目继承」维护任何共享资源。
+  - **为什么**：跨仓库路径引用是隐式依赖（本项目改名、子项目单独 clone、换机器都会静默失效，pi 不报错只是少加载东西）；「只允许追加、不许重述」的纪律本身就说明两层绑在一起有事。
+  - **安全网不受影响**：全局 `~/.pi/agent/`（团队规则、`add` / `commit` / `bump` / `release` 技能、各类守卫扩展）在任何目录都会加载。
 - **子项目任务交给 Worker 会话（2026-11-07 全局 Leader / Worker 规则）**：本项目根目录起的会话是 Leader（只做 local main 同步、建 worktree、派任务、收尾）；子项目根 / 子项目 worktree 起的会话是 Worker（干具体活并向 Leader 汇报）。`agent_call` / `agent_wake` 的 `dir` 允许 Agent 项目根 / 已登记子项目根 / 子项目的 git worktree 三类，启动带 `-a`；子项目专属硬规则写进各自的 `.pi/APPEND_SYSTEM.md`。详见全局 `~/.pi/agent/AGENTS.md`「Leader / Worker 分工」与 `docs/agents-registry.md` 第 4 条。子项目的项目说明用 README / docs 等普通文档承载。
 - **维护映射**：新增 / 变更子项目时同步更新本清单与全局 agents-registry 的「子项目映射」表，两者保持一致。
 
