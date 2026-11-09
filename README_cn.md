@@ -44,6 +44,6 @@ Ada 独立于销售流水线（Scout → Wright → Buzz → Vendy → Echo）�
 
 ## 许可证与署名
 
-Copyright (c) 2026 xhqing <https://github.com/xhqing>. 以 [MIT License](LICENSE.md) 授权。
+Copyright (c) 2026 xhqing and contributors. 以 [MIT License](LICENSE.md) 授权。
 
 **署名**：若您基于本项目派生或再分发，请保留版权声明与许可证文件，并注明来源：[NeuralCoreAgent](https://github.com/xhqing/NeuralCoreAgent)。
