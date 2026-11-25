@@ -33,11 +33,11 @@
 按全局规则（`~/.pi/agent/docs/agents-registry.md`「智能体专属文件归属与子项目映射（2026-11-08 修订）」节）：
 
 - **两边完全独立**：本项目与两个子项目的 `AGENTS.md`、`.pi/` 之间**没有任何链接、没有任何路径引用**，各自只放本项目真实需要的内容。
-  - **子项目那边**：`AGENTS.md` 是**本仓库的实体文件**（本项目是什么 / 归 Ada 负责 / Worker 边界 / 规则索引），`.pi/` 只放自己的东西（通常是 `.pi/APPEND_SYSTEM.md` 一份硬约束，需要技能扩展就放自己的 `.pi/{extensions,skills,...}`）。
+  - **子项目那边**：`AGENTS.md` 是**本仓库的实体文件**（本项目是什么 / 归 Ada 负责 / 角色边界（subLeader / Worker）/ 规则索引），`.pi/` 只放自己的东西（通常是 `.pi/APPEND_SYSTEM.md` 一份硬约束，需要技能扩展就放自己的 `.pi/{extensions,skills,...}`）。
   - **本项目这边**：`AGENTS.md` / `.pi/` 只为 Ada 自己的需要存在，不为「让子项目继承」维护任何共享资源。
   - **为什么**：跨仓库路径引用是隐式依赖（本项目改名、子项目单独 clone、换机器都会静默失效，pi 不报错只是少加载东西）；「只允许追加、不许重述」的纪律本身就说明两层绑在一起有事。
   - **安全网不受影响**：全局 `~/.pi/agent/`（团队规则、`add` / `commit` / `bump` / `release` 技能、各类守卫扩展）在任何目录都会加载。
-- **子项目任务交给 Worker 会话（2026-11-07 全局 Leader / Worker 规则）**：本项目根目录起的会话是 Leader（只做 local main 同步、建 worktree、派任务、收尾）；子项目根 / 子项目 worktree 起的会话是 Worker（干具体活并向 Leader 汇报）。`agent_call` / `agent_wake` 的 `dir` 允许 Agent 项目根 / 已登记子项目根 / 子项目的 git worktree 三类，启动带 `-a`；子项目专属硬规则写进各自的 `.pi/APPEND_SYSTEM.md`。详见全局 `~/.pi/agent/AGENTS.md`「Leader / Worker 分工」与 `docs/agents-registry.md` 第 4 条。子项目的项目说明用 README / docs 等普通文档承载。
+- **会话角色按三级分工（2026-11-25 全局重定义，取代 2026-11-07 的两级口径）**：角色只看「cwd 所在项目 + 当前是否停在 main 分支」——本项目主工作区的 main 分支是 **agentLeader**（管本项目与名下全部子项目：两条 main 的 ff 同步、建删 worktree、派单、合并 PR、发版、收尾）；AgentCortex / ToolCallingRules 主工作区的 main 分支是 **subLeader**（只管本项目：local main 的 ff 同步、从自身 main 建删任务 worktree、派 Worker、按全局工作流合并自身 PR、发自身版本、回收 Worker，对 NeuralCoreAgent 与兄弟子项目只读）；任何项目的非 main 分支 worktree 都是 **Worker**（只干当前 worktree 的活，干完向派它的 Leader 汇报——不碰 local main、不建删 worktree、不合并 PR、不发版）。`agent_call` / `agent_wake` 的 `dir` 允许 Agent 项目根 / Agent 项目的 git worktree / 已登记子项目根 / 子项目的 git worktree 四类（按该目录当前分支判角色），启动带 `-a`；子项目专属硬规则写进各自的 `.pi/APPEND_SYSTEM.md`。详见全局 `~/.pi/agent/AGENTS.md`「Leader / Worker 的定义」与 `docs/agents-registry.md` 第 5 条。子项目的项目说明用 README / docs 等普通文档承载。
 - **维护映射**：新增 / 变更子项目时同步更新本清单与全局 agents-registry 的「子项目映射」表，两者保持一致。
 
 ## 你的位置
